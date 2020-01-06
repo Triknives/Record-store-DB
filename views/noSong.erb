@@ -1,0 +1,16 @@
+<h2>Uh oh, that song doesn't seem to exist, would you like to add it?</h2>
+
+<h4>Add a song:</h4>
+
+<form action="/albums/<%= @album.id %>/songs" method="post">
+  <div class="form-group">
+    <label for="song_name">Song name</label>
+    <input id="song_name" name="song_name" class="form-control" type="text">
+  </div>
+  <button type="submit" class="btn">Add song</button>
+</form>
+
+
+
+<p><a href="/albums/<%= @album.id %>/edit">Edit album</a></p>
+<p><a href="/albums">Return to album list</a></p>
