@@ -65,13 +65,13 @@ describe '#Song' do
   end
 
   describe('#delete') do
-    it("deletes an song by id") do
-      song = Song.new({:name => "Giant Steps", :album_id => @album.id, :id => nil})
+    it("deletes all songs belonging to a deleted album") do
+      album = Album.new({:name => "A Love Supreme", :id => nil})
+      album.save()
+      song = Song.new({:name => "Naima", :album_id => album.id, :id => nil})
       song.save()
-      song2 = Song.new({:name => "Naima", :album_id => @album.id, :id => nil})
-      song2.save()
-      song.delete()
-      expect(Song.all).to(eq([song2]))
+      album.delete()
+      expect(Song.find(song.id)).to(eq(nil))
     end
   end
 
