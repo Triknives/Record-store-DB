@@ -23,3 +23,23 @@ describe('create a song path', {:type => :feature}) do
     expect(page).to have_content('All You Need Is Love')
   end
 end
+
+describe('re-route from Nil album Id', {:type => :feature}) do
+  it('displays a page with information for re-directing') do
+    visit("/albums/13")
+    click_on('Return to album list')
+    expect(page).to have_content('All Sales Vinyl')
+  end
+end
+
+describe('re-route from Nil song ID', {:type => :feature}) do
+  it('displays a page with information for re-directing or adding a song') do
+    album = Album.new({:name => "Yellow Submarine", :id => nil})
+    album.save
+    visit("/albums/#{album.id}/songs/32")
+    expect(page).to have_content('Uh oh, that song doesn\'t seem to exist, would you like to add it?')
+    fill_in('song_name', :with => 'All You Need Is Love')
+    click_on('Add song')
+    expect(page).to have_content('All You Need Is Love')
+  end
+end
