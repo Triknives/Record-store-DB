@@ -30,7 +30,11 @@ end
 
 get ('/albums/:id') do
   @album = Album.find(params[:id].to_i())
-  erb(:album)
+  if @album != nil
+    erb(:album)
+  else
+    erb(:noAlbum)
+  end
 end
 
 get ('/albums/:id/edit') do
@@ -52,7 +56,13 @@ end
 
 get ('/albums/:id/songs/:song_id') do
   @song = Song.find(params[:song_id].to_i())
-  erb(:song)
+  if @song != nil
+    erb(:song)
+  else
+    # Need to define @album and reference the album id to use in noSong.erb
+    @album = Album.find(params[:id].to_i())
+    erb(:noSong)
+  end
 end
 
 post ('/albums/:id/songs') do
